@@ -42,6 +42,7 @@ if __name__ =='__main__':
     # main(method='FUZZY', folder='images', width=200, height=200)
     # main(method='MEAN', folder='images', width=200, height=200)
     # main(method='SOM', folder='images', width=200, height=200)
-    main(method='GMM', folder='images', width=200, height=200)
+    main(method='GMM', folder='images', width=200, height=200)\
+    
     time_elapsed = datetime.now() - start 
     print('Time elapsed (hh:mm:ss.ms) {}'.format(time_elapsed))
