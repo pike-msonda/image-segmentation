@@ -27,10 +27,10 @@ def main(method=None,folder=None,width=None,height=None):
             mean_shift.segment(images=images, im_size=image_reader.size(), clusters=2)
         elif method == "SOM":
             som = SOM()
-            som.segment(images=images, im_size=image_reader.size())
+            som.segment(images=images, im_size=image_reader.size(), clusters=CLUSTERS)
         elif method == "GMM":
             gmm = GMM()
-            gmm.segment(images=images, im_size=image_reader.size())
+            gmm.segment(images=images, im_size=image_reader.size(), clusters=CLUSTERS)
         else:
             print ("Not supported: {0}".format(method))
         
@@ -39,10 +39,10 @@ def main(method=None,folder=None,width=None,height=None):
 if __name__ =='__main__':
     start = datetime.now()
     # main(method='KMEANS', folder='images', width=200, height=200)
-    # main(method='FUZZY', folder='images', width=200, height=200)
+    main(method='FUZZY', folder='images', width=200, height=200)
     # main(method='MEAN', folder='images', width=200, height=200)
     # main(method='SOM', folder='images', width=200, height=200)
-    main(method='GMM', folder='images', width=200, height=200)
+    # main(method='GMM', folder='images', width=200, height=200)
 
     time_elapsed = datetime.now() - start 
     print('Time elapsed (hh:mm:ss.ms) {}'.format(time_elapsed))
