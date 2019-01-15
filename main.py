@@ -6,7 +6,7 @@ from mean_shift  import Mean
 from som import SOM
 from gmm import GMM
 
-CLUSTERS = [2,3,6]
+CLUSTERS = [2,3,4]
 def main(method=None,folder=None,width=None,height=None):
 
     if method is None:
@@ -39,10 +39,10 @@ def main(method=None,folder=None,width=None,height=None):
 if __name__ =='__main__':
     start = datetime.now()
     # main(method='KMEANS', folder='images', width=200, height=200)
-    main(method='FUZZY', folder='images', width=200, height=200)
+    # main(method='FUZZY', folder='images', width=200, height=200)
     # main(method='MEAN', folder='images', width=200, height=200)
     # main(method='SOM', folder='images', width=200, height=200)
-    # main(method='GMM', folder='images', width=200, height=200)
+    main(method='GMM', folder='images', width=200, height=200)
 
     time_elapsed = datetime.now() - start 
     print('Time elapsed (hh:mm:ss.ms) {}'.format(time_elapsed))
