@@ -5,6 +5,7 @@ from datetime import datetime
 from mean_shift  import Mean
 from som import SOM
 from gmm import GMM
+from dbscan import Dbscan
 
 CLUSTERS = [2,3,4]
 def main(method=None,folder=None,width=None,height=None):
@@ -31,6 +32,9 @@ def main(method=None,folder=None,width=None,height=None):
         elif method == "GMM":
             gmm = GMM()
             gmm.segment(images=images, im_size=image_reader.size(), clusters=CLUSTERS)
+        elif method == "DBSCAN":
+            dbscan = Dbscan()
+            dbscan.segment(images=images, im_size=image_reader.size())
         else:
             print ("Not supported: {0}".format(method))
         
@@ -42,7 +46,8 @@ if __name__ =='__main__':
     # main(method='FUZZY', folder='images', width=200, height=200)
     # main(method='MEAN', folder='images', width=200, height=200)
     # main(method='SOM', folder='images', width=200, height=200)
-    main(method='GMM', folder='images', width=200, height=200)
+    # main(method='GMM', folder='images', width=200, height=200)
+    main(method='DBSCAN', folder='images', width=200, height=200)
 
     time_elapsed = datetime.now() - start 
     print('Time elapsed (hh:mm:ss.ms) {}'.format(time_elapsed))
