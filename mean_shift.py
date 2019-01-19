@@ -29,21 +29,22 @@ class Mean:
             plt.imshow(img)
             plt.title("Original image")
 
-            for k in range(n_clusters_):
+            n_clusters_ = range(2, n_clusters_ + 1)
+            for plotindex, cluster in enumerate(n_clusters_):
                 
                 clustering = np.reshape(np.array(labels, dtype=np.uint8),
                     (img.shape[0], img.shape[1]))
 
-                sortedLabels = sorted([n for n in range(k+clusters)],
+                sortedLabels = sorted([n for n in range(cluster)],
                     key=lambda x: -np.sum(clustering == x))
 
                 meanShiftImage = np.zeros(img.shape[:2], dtype=np.uint8)
 
                 for i, label in enumerate(sortedLabels):
-                    meanShiftImage[clustering == label] = int(255 / ((k+clusters) - 1)) * i
+                    meanShiftImage[clustering == label] = int(255 / (cluster - 1)) * i
 
-                plt.subplot(1,n_clusters_+1,k+2)
+                plt.subplot(1,max(n_clusters_)+1,plotindex+2)
                 plt.imshow(meanShiftImage)
-                plt.title("{0} Cluster (MEAN-SHIFT)".format(k+2))
+                plt.title("{0} Cluster (MEAN-SHIFT)".format(cluster))
 
         plt.show()
