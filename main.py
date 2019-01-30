@@ -42,9 +42,9 @@ def main(method=None,folder=None,width=None,height=None):
         
 if __name__ =='__main__':
     start = datetime.now()
-    # main(method='KMEANS', folder='images', width=200, height=200)
+    main(method='KMEANS', folder='images', width=200, height=200)
     # main(method='FUZZY', folder='images', width=200, height=200)
-    main(method='MEAN', folder='images', width=200, height=200)
+    # main(method='MEAN', folder='images', width=200, height=200)
     # main(method='SOM', folder='images', width=200, height=200)
     # main(method='GMM', folder='images', width=200, height=200)
     # main(method='DBSCAN', folder='images', width=200, height=200)

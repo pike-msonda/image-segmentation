@@ -3,6 +3,8 @@ from sklearn.cluster import KMeans
 from time import time
 from utils.tools import Tools
 import matplotlib.pyplot as plt
+from skimage.morphology import disk
+from skimage.filters import gaussian
 
 
 class Kmeans:
@@ -21,7 +23,9 @@ class Kmeans:
             print('Image '+str(index+1))
 
             for plotindex,cluster in enumerate(clusters):
-                kmeans = KMeans(n_clusters=cluster, n_init=40, max_iter=500).fit(reshaped)
+                filtered_image = gaussian(reshaped, sigma=1, multichannel=True)
+                # import pdb; pdb.set_trace()
+                kmeans = KMeans(n_clusters=cluster, n_init=40, max_iter=500).fit(filtered_image)
                 clustering = np.reshape(np.array(kmeans.labels_, dtype=np.uint8),
                     (img.shape[0], img.shape[1]))
                
