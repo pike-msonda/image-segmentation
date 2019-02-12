@@ -16,9 +16,6 @@ def helper(b1,b2,h,w,thres):
                 if matrix.sum() > 0:
                     cnt = cnt + 1
     total = b1.sum()
-    print (cnt)
-    print (total)
-    value = cnt /total 
     return cnt/ total
 
     

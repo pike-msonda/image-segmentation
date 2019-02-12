@@ -22,7 +22,7 @@ def main(method=None,folder=None,width=None,height=None):
             kmeans.segment(images=images, im_size=image_reader.size(), filenames=img_names, clusters=CLUSTERS)
         elif method =="FUZZY":
             fuzzy =  Fuzzy()
-            fuzzy.segment(images=images,im_size=image_reader.size(),clusters=CLUSTERS)
+            fuzzy.segment(images=images,im_size=image_reader.size(), filenames=img_names, clusters=CLUSTERS)
         elif method == "MEAN":
             mean_shift = Mean()
             mean_shift.segment(images=images, im_size=image_reader.size(), clusters=2)
@@ -42,8 +42,8 @@ def main(method=None,folder=None,width=None,height=None):
         
 if __name__ =='__main__':
     start = datetime.now()
-    main(method='KMEANS', folder='images')
-    # main(method='FUZZY', folder='images', width=200, height=200)
+    # main(method='KMEANS', folder='images')
+    main(method='FUZZY', folder='images')
     # main(method='MEAN', folder='images', width=200, height=200)
     # main(method='SOM', folder='images', width=200, height=200)
     # main(method='GMM', folder='images', width=200, height=200)

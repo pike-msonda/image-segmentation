@@ -56,7 +56,10 @@ class Kmeans:
                 # plt.imshow(kmeansImage)
                 # name = str(cluster)+ ' Cluster (KMEANS)'
                 # plt.title(name)
+                filename = "kmeans/"+ filename
+
             stf.save_seg(kmeansImage,filename)
             stf.save_to_binary(image_mask,filename)
+            
             # plt.savefig(name)
         # plt.show()

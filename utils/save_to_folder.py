@@ -3,10 +3,12 @@ import numpy as np
 import scipy.io
 
 def save_seg(seg, filename, folder="segs"):
-    cv2.imwrite(folder +'/'+filename, seg)
+    filename = folder +'/'+filename
+    cv2.imwrite(filename, seg)
 
 def save_to_binary(binary, filename, folder="binary"):
-     cv2.imwrite(folder +'/'+filename, binary)
+     filename = folder +'/'+filename
+     cv2.imwrite(filename, binary)
 
 def read_truth(path):
     """
