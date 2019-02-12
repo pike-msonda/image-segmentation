@@ -15,7 +15,7 @@ class Kmeans:
             img = np.reshape(rgb_img, (im_size[0],im_size[1], 3)).astype(np.uint8)
             reshaped = img.reshape(img.shape[0] * img.shape[1], img.shape[2])
 
-            import pdb; pdb.set_trace()
+            # import pdb; pdb.set_trace()
             # plt.figure(figsize=(20,20))
             # plt.subplot(1,4,1)
             # plt.imshow(img)

@@ -14,7 +14,7 @@ def main(method=None,folder=None,width=None,height=None):
         print('Specify segmentation method as main(method="KMEANS" or "FUZZY"')
         return
     else:
-        image_reader = ImageReader(folder=folder,width=width, height=height)
+        image_reader = ImageReader(folder=folder)
         images, img_names =  image_reader.read()
         if method == "KMEANS":
             kmeans = Kmeans()
@@ -42,7 +42,7 @@ def main(method=None,folder=None,width=None,height=None):
         
 if __name__ =='__main__':
     start = datetime.now()
-    main(method='KMEANS', folder='images', width=200, height=200)
+    main(method='KMEANS', folder='images')
     # main(method='FUZZY', folder='images', width=200, height=200)
     # main(method='MEAN', folder='images', width=200, height=200)
     # main(method='SOM', folder='images', width=200, height=200)
