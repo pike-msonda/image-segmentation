@@ -14,7 +14,7 @@ def getTruth():
     for sl in seg_list:
         path = SEG_PATH + sl + '/'
         print("======================================")
-        print("CALCULATING Normalized Probabilistic Rand (NPR) index FOR "+ sl.upper())
+        print("CALCULATING Precision and Recall FOR "+ sl.upper())
         print("======================================")
         for f, s in zip(truth_list, [f for f in listdir(path) if isfile(join(path, f)) and f.endswith(".jpg")]):
                 ground_path = GROUND_TRUTH + f
