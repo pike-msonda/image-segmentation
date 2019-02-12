@@ -4,19 +4,15 @@ from time import time
 from scipy.ndimage import median_filter
 from skimage.morphology import label as cl
 import matplotlib.pyplot as plt
-
+import utils.calculate_boundary as cb
+import utils.save_to_folder as stf
 
 class SOM:
-    def segment(self, images, im_size, clusters=[3]):
-        for index, rgb_img in enumerate(images):
+    def segment(self, images, im_size, filenames, clusters=[3]):
+      for index,(rgb_img, filename) in enumerate(zip(images, filenames)):
             img = np.reshape(rgb_img, (im_size[0], im_size[1], 3)).astype(np.uint8)
             reshaped = img.reshape(img.shape[0] * img.shape[1], img.shape[2])
             
-            plt.figure(figsize=(20,20))
-            plt.subplot(1,4,1)
-            plt.imshow(img)
-            plt.title("Original image")
-             
             new_time = time()
             # looping every cluster  
             print('Image '+str(index+1))
@@ -39,6 +35,7 @@ class SOM:
                 clustering = np.reshape(np.array(output, dtype=np.uint8),
                     (img.shape[0], img.shape[1]))
                 
+                image_mask = cb.find_bound(clustering, im_size)
                  # Sort the cluster labels in order of the frequency with which they occur.
                 sortedLabels = sorted([n for n in range(cluster)],
                     key=lambda x: -np.sum(clustering == x))
@@ -48,19 +45,11 @@ class SOM:
                 
                 for i, label in enumerate(sortedLabels):
                     somImage[clustering == label] = int(255 / (cluster - 1)) * i 
-                # output = output.reshape(im_size[0], im_size[1])
-                # cc_image = cl(output, connectivity=2)
-                # labels_filtered = median_filter(output,7)
-                # labels_filtered, cc_image
-
-                plt.subplot(1,4,plotindex+2)
-                plt.imshow(somImage)
-                name = str(cluster)+ ' Cluster (SOM)'
-                plt.title(name)
-
-        plt.show()
-
-
+            
+                filename = "som/"+ filename
+            stf.save_seg(somImage,filename)
+            stf.save_to_binary(image_mask,filename)
+                
         
 
 

@@ -13,7 +13,9 @@ def getTruth():
     truth = []
     for sl in seg_list:
         path = BINARY_PATH + sl + '/'
-        print("CALCULATING NPR FOR "+ sl)
+        print("======================================")
+        print("CALCULATING Normalized Probabilistic Rand (NPR) index FOR "+ sl.upper())
+        print("======================================")
         for f, s in zip(truth_list, listdir(path)):
                 ground_path = GROUND_TRUTH + f
                 boundary_path = path + s
@@ -31,6 +33,7 @@ def getTruth():
 
 def main():
     getTruth()
+
 
 if __name__ == "__main__":
     main()

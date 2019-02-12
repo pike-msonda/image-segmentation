@@ -15,10 +15,6 @@ class Fuzzy:
             img = np.reshape(rgb_img, (im_size[0],im_size[1], 3)).astype(np.uint8)
             shape = np.shape(img)
 
-            # plt.figure(figsize=(20,20))
-            # plt.subplot(1,4,1)
-            # plt.imshow(img)
-            # plt.title("Original image")
             # looping every cluster     
             print('Image '+str(index+1))
             for i,cluster in enumerate(clusters):
@@ -56,4 +52,4 @@ class Fuzzy:
             stf.save_seg(seg_img_1d,filename)
             stf.save_to_binary(image_mask,filename)
             # name = 'segmented'+str(index)+'.png'
-        plt.show()
+        # plt.show()
