@@ -42,12 +42,12 @@ def main(method=None,folder=None,width=None,height=None):
         
 if __name__ =='__main__':
     start = datetime.now()
-    # main(method='KMEANS', folder='images')
-    # main(method='FUZZY', folder='images')
-    # main(method='MEAN', folder='images')
-    # main(method='SOM', folder='images')
-    # main(method='GMM', folder='images')
-    main(method='DBSCAN', folder='images')
+    main(method='KMEANS', folder='images')
+    main(method='FUZZY', folder='images')
+    main(method='MEAN', folder='images')
+    main(method='SOM', folder='images')
+    main(method='GMM', folder='images')
+    # main(method='DBSCAN', folder='images')
 
     time_elapsed = datetime.now() - start 
     print('Time elapsed (hh:mm:ss.ms) {}'.format(time_elapsed))

@@ -24,7 +24,7 @@ class Kmeans:
                 kmeans = KMeans(n_clusters=cluster, n_init=40, max_iter=500).fit(filtered_image)
 
                 # calculate the boundary of an image. 
-                image_mask = cb.find_bound(clustering, im_size)
+                image_mask = cb.find_bound(kmeans.labels_, im_size)
                 # import pdb; pdb.set_trace()
                 clustering = np.reshape(np.array(kmeans.labels_, dtype=np.uint8),
                     (img.shape[0], img.shape[1]))
