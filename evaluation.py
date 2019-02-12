@@ -8,15 +8,15 @@ BINARY_PATH = "./binary/"
 GROUND_TRUTH ="./ground_truth/"
 
 def getTruth():
-    truth_list = listdir(GROUND_TRUTH)
-    seg_list = listdir(BINARY_PATH)
-    truth = []
+    truth_list  =[f for f in listdir(GROUND_TRUTH) if isfile(join(GROUND_TRUTH, f)) and f.endswith(".mat")]
+    seg_list = listdir(SEG_PATH)
+    
     for sl in seg_list:
-        path = BINARY_PATH + sl + '/'
+        path = SEG_PATH + sl + '/'
         print("======================================")
         print("CALCULATING Normalized Probabilistic Rand (NPR) index FOR "+ sl.upper())
         print("======================================")
-        for f, s in zip(truth_list, listdir(path)):
+        for f, s in zip(truth_list, [f for f in listdir(path) if isfile(join(path, f)) and f.endswith(".jpg")]):
                 ground_path = GROUND_TRUTH + f
                 boundary_path = path + s
                 print(ground_path)
