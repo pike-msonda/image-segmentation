@@ -29,6 +29,19 @@ class Mean:
             print("number of estimated clusters : %d" % n_clusters_)
             center_results = cluster_centers[labels.flatten(), 0:3]
             meanShiftImage = center_results.reshape(rgb_img.shape)
+            n_clusters_ = range(2, n_clusters_ + 1)
+            
+            for plotindex, cluster in enumerate(n_clusters_):
+                clustering = np.reshape(np.array(labels, dtype=np.uint8),
+                    (img.shape[0], img.shape[1]))
+                
+                sortedLabels = sorted([n for n in range(cluster)],
+                    key=lambda x: -np.sum(clustering == x))
+
+                meanShiftImage = np.zeros(img.shape[:2], dtype=np.uint8)
+
+                for i, label in enumerate(sortedLabels):
+                    meanShiftImage[clustering == label] = int(255 / (cluster - 1)) * i
 
             filename = "meanshift/"+ filename
             
