@@ -7,7 +7,7 @@ from som import SOM
 from gmm import GMM
 from dbscan import Dbscan
 
-CLUSTERS = [2,3,4]
+CLUSTERS = [3]
 def main(method=None,folder=None,width=None,height=None):
 
     if method is None:
@@ -15,11 +15,11 @@ def main(method=None,folder=None,width=None,height=None):
         return
     else:
         image_reader = ImageReader(folder=folder,width=width, height=height)
-        images =  image_reader.read()
+        images, img_names =  image_reader.read()
         if method == "KMEANS":
             kmeans = Kmeans()
             print("Image size of: {0}".format(image_reader.size()))
-            kmeans.segment(images=images, im_size=image_reader.size(), clusters=CLUSTERS)
+            kmeans.segment(images=images, im_size=image_reader.size(), filenames=img_names, clusters=CLUSTERS)
         elif method =="FUZZY":
             fuzzy =  Fuzzy()
             fuzzy.segment(images=images,im_size=image_reader.size(),clusters=CLUSTERS)
