@@ -19,6 +19,7 @@ class ImageReader:
             print(path)
             list_img_name.append(path.split('/')[1])
             img = cv2.imread(path)
+            print(img.shape)
             self.width = img.shape[0]
             self.height = img.shape[1]
             # import pdb; pdb.set_trace()
