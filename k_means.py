@@ -41,18 +41,13 @@ class Kmeans:
                 print('Clustering (Kmeans)',cluster)
                 print(time() - new_time,'seconds')
 
-                # import pdb; pdb.set_trace() 
-                
+
+                # get black and white araa.     
                 print('Bkack and White Area : '+str(  Tools.bwarea(kmeansImage)))
 
-                # plt.subplot(1,4,plotindex+2)
-                # plt.imshow(kmeansImage)
-                # name = str(cluster)+ ' Cluster (KMEANS)'
-                # plt.title(name)
                 filename = "kmeans/"+ filename
 
             stf.save_seg(kmeansImage,filename)
             stf.save_to_binary(image_mask,filename)
-            
-            # plt.savefig(name)
-        # plt.show()
+    
+  

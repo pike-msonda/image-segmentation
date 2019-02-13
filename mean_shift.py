@@ -26,6 +26,7 @@ class Mean:
             cluster_centers =  np.uint8(ms.cluster_centers_)
             labels_unique = np.unique(labels)
             n_clusters_ = len(labels_unique)
+            
             print("number of estimated clusters : %d" % n_clusters_)
             center_results = cluster_centers[labels.flatten(), 0:3]
             meanShiftImage = center_results.reshape(rgb_img.shape)

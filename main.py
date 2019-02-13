@@ -47,7 +47,7 @@ if __name__ =='__main__':
     main(method='MEAN', folder='images')
     main(method='SOM', folder='images')
     main(method='GMM', folder='images')
-    # main(method='DBSCAN', folder='images') // too slow. 
+    main(method='DBSCAN', folder='images') # too slow. 
 
     time_elapsed = datetime.now() - start 
     print('Time elapsed (hh:mm:ss.ms) {}'.format(time_elapsed))
