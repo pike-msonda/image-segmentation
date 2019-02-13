@@ -14,6 +14,7 @@ class Fuzzy:
     """
     def segment(self, images, im_size, filenames, clusters=[3]):
         # looping every images
+        print ("Segmenting using FUZZY C MEANS")
         for index,(rgb_img, filename) in enumerate(zip(images, filenames)):
             img = np.reshape(rgb_img, (im_size[0],im_size[1], 3)).astype(np.uint8)
             shape = np.shape(img)

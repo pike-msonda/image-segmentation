@@ -9,7 +9,8 @@ import utils.save_to_folder as stf
 
 class GMM:
     def segment(self, images, im_size, filenames, clusters=[3]):
-
+        
+        print ("Segmenting using GMM")
         for index,(rgb_img, filename) in enumerate(zip(images, filenames)):
             img = np.reshape(rgb_img, (im_size[0], im_size[1], 3)).astype(np.uint8)
             reshaped = img.reshape(img.shape[0] * img.shape[1], img.shape[2])

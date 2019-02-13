@@ -12,6 +12,7 @@ class Dbscan:
 
 	def segment(self, images, im_size, filenames, clusters=3):
 
+		print ("Segmenting using DBSCAN")
 		for index,(rgb_img, filename) in enumerate(zip(images, filenames)):
 			img = np.reshape(rgb_img, (im_size[0],im_size[1],3)).astype(np.uint8)
 
