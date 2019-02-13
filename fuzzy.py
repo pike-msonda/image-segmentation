@@ -9,47 +9,45 @@ import utils.save_to_folder as stf
 
 class Fuzzy:
 
+    """
+        Image Segmentation with Fuzzy C means. 
+    """
     def segment(self, images, im_size, filenames, clusters=[3]):
         # looping every images
         for index,(rgb_img, filename) in enumerate(zip(images, filenames)):
             img = np.reshape(rgb_img, (im_size[0],im_size[1], 3)).astype(np.uint8)
             shape = np.shape(img)
 
-            # looping every cluster     
             print('Image '+str(index+1))
             for i,cluster in enumerate(clusters):
-                    
-                # Fuzzy C Means
                 new_time = time()
                 
                 cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(
                     rgb_img.T, cluster, 2, error=0.005, maxiter=1000, init=None,seed=42)
 
-                # import pdb; pdb.set_trace()
-                new_img =  Tools.change_color_fuzzycmeans(u,cntr)
+                # make labels based on membership. 
+                cluster_membership = np.argmax(u, axis=0)  
                 
-                fuzzy_img = np.reshape(new_img,shape).astype(np.uint8)
+                # create binary image. Contains information about image boundary. 
+                image_mask = cb.find_bound(cluster_membership, im_size)
 
-                image_mask = cb.find_bound(fuzzy_img[:,:,2], im_size)
-                # ret, seg_img = cv2.threshold(fuzzy_img,np.max(fuzzy_img)-1,255,cv2.THRESH_BINARY)
+                clustering = np.reshape(np.array(cluster_membership, dtype=np.uint8),
+                    (img.shape[0], img.shape[1]))
                 
+                sortedLabels = sorted([n for n in range(cluster)],
+                    key=lambda x: -np.sum(clustering == x))
+
+                fuzzyImage = np.zeros(img.shape[:2], dtype=np.uint8)
+                for i, label in enumerate(sortedLabels):
+                    fuzzyImage[clustering == label] = int(255 / (cluster - 1)) * i
+
                 print('Clustering (Fuzzy)',cluster)
-                print(time() - new_time,'seconds')
-                seg_img_1d = fuzzy_img[:,:,1]
                 
-                
-                # bwfim1 =  Tools.bwareaopen(seg_img_1d, 100)
-                # bwfim2 =  Tools.imclearborder(bwfim1)
-                # bwfim3 =  Tools.imfill(bwfim2)
-                
-                print('Bwarea : '+str( Tools.bwarea(seg_img_1d)))
+                # get black and white area. 
+                print('Bkack and White Area : '+str(  Tools.bwarea(fuzzyImage)))
 
-                # plt.subplot(1,4,i+2)
-                # plt.imshow(seg_img_1d)
-                # name = str(cluster)+ ' Cluster (Fuzzy)'
-                # plt.title(name)
+                print(time() - new_time,'seconds')
+                
                 filename = "fuzzy/"+ filename
-            stf.save_seg(seg_img_1d,filename)
+            stf.save_seg(fuzzyImage,filename)
             stf.save_to_binary(image_mask,filename)
-            # name = 'segmented'+str(index)+'.png'
-        # plt.show()
