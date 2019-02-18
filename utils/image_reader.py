@@ -1,6 +1,7 @@
 import os
 import cv2
-
+from os import listdir
+from os.path import isfile, join, splitext 
 class ImageReader:
 
     def __init__(self, folder=None):
@@ -9,7 +10,7 @@ class ImageReader:
     def read(self):
         folder = self.folder + "/"
         print("Reading images from {0}".format(folder))
-        list_images = os.listdir(folder)
+        list_images = [f for f in listdir(folder) if isfile(join(folder, f)) and f.endswith(".jpg")]
         list_img = []
         list_img_name = []
         for i in list_images:

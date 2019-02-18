@@ -1,8 +1,7 @@
 import utils.save_to_folder as stf
-from os import listdir, remove, path
+import os
 import cv2
 import argparse
-from os.path import isfile, join, splitext
 import utils.evaluate_boundary as eb
 from tabulate import tabulate
 import pandas as pd
@@ -12,16 +11,31 @@ BINARY_PATH = "./binary/"
 GROUND_TRUTH ="./ground_truth/"
 
 def main(args):
-    truth_list = [f for f in listdir(GROUND_TRUTH) if isfile(join(GROUND_TRUTH, f)) and f.endswith(".mat")]
-    seg_list = listdir(SEG_PATH)
-    binary_list = listdir(BINARY_PATH)
+    truth_list = [f for f in os.listdir(GROUND_TRUTH) if os.path.isfile(os.path.join(GROUND_TRUTH, f)) and f.endswith(".mat")]
+    seg_list = os.listdir(SEG_PATH)
+    binary_list = os.listdir(BINARY_PATH)
     results = pd.DataFrame(columns=['Algorithm', 'Image', 'Precision', 'Recall'])
-    
+
+    if(args.d == 'D'):
+        for dl in binary_list:
+            seg_path = SEG_PATH + dl + '/'  
+            binary_path = BINARY_PATH + dl + '/'  
+            for f, s in zip([f for f in os.listdir(binary_path) if os.path.isfile(os.path.join(binary_path, f)) and f.endswith(".jpg")], 
+                [f for f in os.listdir(seg_path) if os.path.isfile(os.path.join(seg_path, f)) and f.endswith(".jpg")]):
+                if(os.path.exists(binary_path + f)):
+                    print ("removing .. {0}".format(binary_path + f))
+                    os.remove(binary_path + f)
+                if(os.path.exists(seg_path + s)):
+                    print ("removing .. {0}".format(binary_path + f))
+                    os.remove(seg_path + f)
+        print("completed")
+        return
+
     print("CALCULATING ...  \n")
     for sl in seg_list:
         path = SEG_PATH + sl + '/'
         if (sl == args.a or args.a == 'all'):
-            for f, s in zip(truth_list, [f for f in listdir(path) if isfile(join(path, f)) and f.endswith(".jpg")]):
+            for f, s in zip(truth_list, [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f)) and f.endswith(".jpg")]):
                 ground_path = GROUND_TRUTH + f
                 boundary_path = path + s
 
@@ -55,25 +69,9 @@ def main(args):
     print("======================================")
     print (results.groupby(['Algorithm']).mean())
 
-    if(args.d == 'D'):
-        for dl in binary_list:
-            seg_path = SEG_PATH + dl + '/'  
-            binary_path = BINARY_PATH + dl + '/'  
-            for f, s in zip([f for f in listdir(binary_path) if isfile(join(binary_path, f)) and f.endswith(".jpg")], 
-                [f for f in listdir(seg_path) if isfile(join(seg_path, f)) and f.endswith(".jpg")]):
-                if(path.exists(binary_path + f)):
-                    print ("removing .. {0}".format(binary_path + f))
-                    remove(binary_path + f)
-                if(path.exists(seg_path + s)):
-                    print ("removing .. {0}".format(binary_path + f))
-                    remove(seg_path + f)
-        print("completed")
-        return
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', default='all', type=str, required=False, help="select type of algorithm to evaluation. Eg.'kmeans', 'all', 'dbscan'")
     parser.add_argument('-d', type=str, required=False, help='deletes all segments and binary files')
     args = parser.parse_args()  
-    # import pdb; pdb.set_trace()
     main(args)

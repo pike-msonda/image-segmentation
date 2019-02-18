@@ -2,6 +2,8 @@
 from __future__ import division  
 import numpy as np
 import copy
+
+
 def helper(b1,b2,h,w,thres):
     cnt = 0
     for i in range(h):
