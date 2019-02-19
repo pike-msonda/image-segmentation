@@ -4,7 +4,7 @@ from time import time
 from utils.tools import Tools
 import matplotlib.pyplot as plt
 from skimage.morphology import disk
-from skimage.filters import gaussian
+from skimage.filters import gaussian, median
 import utils.calculate_boundary as cb
 import utils.save_to_folder as stf
 
@@ -22,7 +22,7 @@ class Kmeans:
             print('Image '+str(index+1))
 
             for plotindex,cluster in enumerate(clusters):
-                filtered_image = gaussian(reshaped, sigma=1, multichannel=True)
+                filtered_image = median(reshaped, disk(5))
                 kmeans = KMeans(n_clusters=cluster, n_init=40, max_iter=500).fit(filtered_image)
 
                 # calculate the boundary of an image. 
