@@ -23,8 +23,8 @@ class Kmeans:
 
             for plotindex,cluster in enumerate(clusters):
                 filtered_image = median(reshaped, disk(10))
-                kmeansImage, image_mask =  self.use_kmeans(filtered_image, img, im_size, cluster, filename)
-                unfilteredImage, unfiltered_image_mask =  self.use_kmeans(reshaped, img, im_size, cluster, filename)
+                kmeansImage, image_mask =  self.use_kmeans(filtered_image, img, im_size, cluster)
+                unfilteredImage, unfiltered_image_mask =  self.use_kmeans(reshaped, img, im_size, cluster)
 
 
             unfiltered = "kmeans/unfiltered/"+"unfiltered_"+filename
@@ -35,7 +35,7 @@ class Kmeans:
             stf.save_to_binary(image_mask,filename)
     
 
-    def use_kmeans(self, image, img, im_size, cluster,  filname):
+    def use_kmeans(self, image, img, im_size, cluster):
         kmeans = KMeans(n_clusters=cluster, n_init=40, max_iter=500).fit(image)
         # calculate the boundary of an image. 
         image_mask = cb.find_bound(kmeans.labels_, im_size)

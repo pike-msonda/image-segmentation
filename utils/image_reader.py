@@ -2,6 +2,8 @@ import os
 import cv2
 from os import listdir
 from os.path import isfile, join, splitext 
+
+
 class ImageReader:
 
     def __init__(self, folder=None):
