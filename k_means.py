@@ -19,6 +19,7 @@ class Kmeans:
 
             # new_time = time()
             # looping every cluster  
+            import pdb; pdb.set_trace()
             print('Image '+str(index+1))
 
             for plotindex,cluster in enumerate(clusters):

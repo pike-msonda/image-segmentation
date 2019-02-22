@@ -19,22 +19,22 @@ class Fuzzy:
         print ("Segmenting using FUZZY C MEANS")
         for index,(rgb_img, filename) in enumerate(zip(images, filenames)):
             img = np.reshape(rgb_img, (im_size[0],im_size[1], 3)).astype(np.uint8)
-            shape = np.shape(img)
-
+            reshaped = img.reshape(img.shape[0] * img.shape[1], img.shape[2])
             print('Image '+str(index+1))
             for i,cluster in enumerate(clusters):
-                filtered_image = median(rgb_img, disk(10))
-                fuzzyImage, image_mask = self.fuzzy_seg(filtered_image, im_size, cluster)
-                unfilteredImage, image_mask = self.fuzzy_seg(rgb_img, im_size, cluster)
+                filtered_image = median(reshaped, disk(10))
+                fuzzyImage, image_mask = self.fuzzy_seg(filtered_image,img, im_size, cluster)
+                unfilteredImage, image_mask = self.fuzzy_seg(reshaped, img, im_size, cluster)
                 
-                filename = "fuzzy/"+ filename
                 unfiltered = "fuzzy/unfiltered/"+"unfiltered_"+filename
+                filename = "fuzzy/"+ filename
+                import pdb; pdb.set_trace()
 
-            stf.save_seg(fuzzyImage,filename)
-            stf.save_seg(unfilteredImage,unfiltered)
-            stf.save_to_binary(image_mask,filename)
+                stf.save_seg(fuzzyImage,filename)
+                stf.save_seg(unfilteredImage,unfiltered)
+                stf.save_to_binary(image_mask,filename)
 
-    def fuzzy_seg(self, image,im_size,cluster):
+    def fuzzy_seg(self, image,img, im_size,cluster):
         cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(
                     image.T, cluster, 2, error=0.005, maxiter=1000, init=None,seed=42)
 
@@ -45,12 +45,12 @@ class Fuzzy:
         image_mask = cb.find_bound(cluster_membership, im_size)
 
         clustering = np.reshape(np.array(cluster_membership, dtype=np.uint8),
-            (image.shape[0], image.shape[1]))
-        
+            (img.shape[0], img.shape[1]))
+    
         sortedLabels = sorted([n for n in range(cluster)],
             key=lambda x: -np.sum(clustering == x))
 
-        fuzzyImage = np.zeros(image.shape[:2], dtype=np.uint8)
+        fuzzyImage = np.zeros(img.shape[:2], dtype=np.uint8)
         for i, label in enumerate(sortedLabels):
             fuzzyImage[clustering == label] = int(255 / (cluster - 1)) * i
 
