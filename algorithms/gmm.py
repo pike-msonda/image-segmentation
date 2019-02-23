@@ -39,4 +39,4 @@ class GMM:
                 filename = "gmm/"+ filename
             stf.save_seg(gmmImage,filename)
             stf.save_to_binary(image_mask,filename)
-                
+    

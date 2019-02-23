@@ -14,27 +14,35 @@ class Fuzzy:
     """
         Image Segmentation with Fuzzy C means. 
     """
-    def segment(self, images, im_size, filenames, clusters=[3]):
+    def __init__(self, images, im_size, filenames, clusters,filters="median"):
+        self.images = images
+        self.im_size = im_size
+        self.filenames = filenames
+        self.clusters = clusters
+        self.filters = filters
+
+    def segment(self):
         # looping every images
         print ("Segmenting using FUZZY C MEANS")
-        for index,(rgb_img, filename) in enumerate(zip(images, filenames)):
-            img = np.reshape(rgb_img, (im_size[0],im_size[1], 3)).astype(np.uint8)
+        for index,(rgb_img, filename) in enumerate(zip(self.images, self.filenames)):
+            img = np.reshape(rgb_img, (self.im_size[0],self.im_size[1], 3)).astype(np.uint8)
             reshaped = img.reshape(img.shape[0] * img.shape[1], img.shape[2])
-            print('Image '+str(index+1))
-            for i,cluster in enumerate(clusters):
+
+            print('Segmenting Image '+str(index+1))
+            
+            for i,cluster in enumerate(self.clusters):
                 filtered_image = median(reshaped, disk(10))
-                fuzzyImage, image_mask = self.fuzzy_seg(filtered_image,img, im_size, cluster)
-                unfilteredImage, image_mask = self.fuzzy_seg(reshaped, img, im_size, cluster)
+                fuzzyImage, image_mask = self.fuzzy(filtered_image,img, self.im_size, cluster)
+                unfilteredImage, image_mask = self.fuzzy(reshaped, img, self.im_size, cluster)
                 
                 unfiltered = "fuzzy/unfiltered/"+"unfiltered_"+filename
                 filename = "fuzzy/"+ filename
-                import pdb; pdb.set_trace()
 
                 stf.save_seg(fuzzyImage,filename)
                 stf.save_seg(unfilteredImage,unfiltered)
                 stf.save_to_binary(image_mask,filename)
 
-    def fuzzy_seg(self, image,img, im_size,cluster):
+    def fuzzy(self, image,img, im_size,cluster):
         cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(
                     image.T, cluster, 2, error=0.005, maxiter=1000, init=None,seed=42)
 
