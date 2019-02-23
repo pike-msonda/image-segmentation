@@ -1,23 +1,21 @@
-from utils.image_reader import ImageReader
-from algorithms.k_means import Kmeans
+from algorithms.segmentation_resolver import SegmentationResolver
+from utils.utils import read_images
 from datetime import datetime
 
 CLUSTERS = [3]
-def main(method=None,folder=None):
+IMAGES_FOLDER = "images"
 
-    image_reader = ImageReader(folder=folder)
-    
-    images, img_names =  image_reader.read()
+def execute(method=None):
+    images, img_names, size =  read_images(folder=IMAGES_FOLDER)
 
-    params = {'images':images, 'image_size':image_reader.size(),
-        'filenames':img_names, 'clusters':CLUSTERS, 'filter':'gaussian'}
+    params = {'images':images, 'image_size':size,'filenames':img_names, 
+        'clusters':CLUSTERS, 'filter':'gaussian'}
+    segmentation_algorithms = SegmentationResolver(params)
 
     if method == "KMEANS":
-        kmeans = Kmeans(params)
-        kmeans.segment()
-    # elif method =="FUZZY":
-    #     fuzzy =  Fuzzy(params)
-    #     fuzzy.segment(images=images,im_size=image_reader.size(), filenames=img_names, clusters=CLUSTERS)
+        segmentation_algorithms.segment()
+    elif method =="FUZZY":
+         segmentation_algorithms.segment(algorithm=method.lower())
     # elif method == "MEAN":
     #     mean_shift = Mean()
     #     mean_shift.segment(images=images, im_size=image_reader.size(), filenames=img_names)
@@ -34,16 +32,18 @@ def main(method=None,folder=None):
     #     print ("Not supported: {0}".format(method))
         
 
-        
-if __name__ =='__main__':
+def main():
     start = datetime.now()
-    main(method='KMEANS', folder='images')
-    # main(method='FUZZY', folder='images')
-    # main(method='MEAN', folder='images')
-    # main(method='SOM', folder='images')
-    # main(method='GMM', folder='images')
-    # main(method='DBSCAN', folder='images') # too slow. 
+    execute(method='KMEANS')
+    execute(method='FUZZY')
+    # execute(method='MEAN', folder='images')
+    # execute(method='SOM', folder='images')
+    # execute(method='GMM', folder='images')
+    # execute(method='DBSCAN', folder='images') # too slow. 
 
     time_elapsed = datetime.now() - start
     
     print('Time elapsed (hh:mm:ss.ms) {}'.format(time_elapsed))
+        
+if __name__ =='__main__':
+   main()
