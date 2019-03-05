@@ -2,7 +2,7 @@ from algorithms.segmentation_resolver import SegmentationResolver
 from utils.utils import read_images
 from datetime import datetime
 
-CLUSTERS = [3]
+CLUSTERS = [5]
 IMAGES_FOLDER = "images"
 
 def execute(method=None):
@@ -22,7 +22,7 @@ def main():
     execute(method='MEANSHIFT')
     execute(method='SOM')
     execute(method='GMM')
-    execute(method='DBSCAN') # too slow. 
+    # execute(method='DBSCAN') # too slow. 
     time_elapsed = datetime.now() - start
     
     print('Time elapsed (hh:mm:ss.ms) {}'.format(time_elapsed))

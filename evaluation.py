@@ -1,4 +1,4 @@
-import utils.save_to_folder as stf
+from utils.utils import read_truth, eval_bound
 import os
 import cv2
 import argparse
@@ -40,17 +40,17 @@ def main(args):
                 boundary_path = path + s
 
                 image_name = boundary_path.split('/')[-1]
-                f_truth = stf.read_truth(ground_path)
+                f_truth = read_truth(ground_path)
                 img = cv2.imread(boundary_path)
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 size = img.shape
 
-        
+                import pdb; pdb.set_trace();
                 boundary_predict = img.reshape(size[0], size[1], 1)
 
-                precision, recall = eb.eval_bound(boundary_predict, f_truth, 2)
+                precision, recall, f1 = eval_bound(boundary_predict, f_truth, 2)
                 
-                data = {'Algorithm': sl.upper(), 'Image': image_name, 'Precision': precision, 'Recall': recall}
+                data = {'Algorithm': sl.upper(), 'Image': image_name, 'Precision': precision, 'Recall': recall, 'F1 Score': f1}
                 print ("boundar details: {0}, {1}".format(f_truth.shape[0], f_truth.shape[1]))
                 print ("image details: {0}, {1}".format(img.shape[0], img.shape[1]))
 

@@ -161,5 +161,9 @@ def eval_bound(mask1, mask2 ,thres):
     w = s1[1]
     precision = helper(b1,b2,h,w,thres)  
     recall = helper(b2,b1,h,w,thres)
-    
-    return precision, recall
+    f1 = f1_score(precision, recall)
+    # F1 = 2 * (precision * recall) / (precision + recall)
+    return precision, recall, f1
+
+def f1_score(precision, recall):
+    return 2 *(precision * recall) / (precision + recall)
