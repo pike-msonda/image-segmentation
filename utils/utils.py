@@ -24,7 +24,7 @@ def read_images(folder='images'):
         path = folder + i
         print(path)
         list_img_name.append(path.split('/')[1])
-        img = cv2.imread(path)
+        img = plt.imread(path)
         rgb_img = img.reshape((img.shape[0] * img.shape[1], 3))
         list_img.append(rgb_img)
     return list_img, list_img_name, img.shape
@@ -71,22 +71,24 @@ def get_image_boundaries(labels, size):
     ret[:, 1:width, :] = np.logical_or(ret[:, 1:width,:], mask1)
 
     ret2 = np.ones([height,width,1], dtype="uint8")
-    bounds = ret2*255 - ret * 255
+    bounds = ret2 * 255 - ret * 255
 
     return bounds
 
 def get_variable_name(variable):
     return [ k for k,v in locals().iteritems() if v == variable][0]
 
-def save_to_folder(folder=None,filename=None, image=None):
+def save_to_folder(folder=None,filename=None, image=None, imType=None):
     if folder is None or filename is None or image is None:
         print("Could not save to file. {0}, {1} , {2} must not be None".format(folder, filename, image))
         return
     filename = folder +'/'+filename
     if len(image.shape) == 3:
-       cv2.imwrite(filename, image)
-    else:
+        cv2.imwrite(filename, image)
+    elif imType =="a":
         plt.imsave(filename, image)
+    else:
+       cv2.imwrite(filename, image)
 
     print("succesfully saved  to {0}".format(filename))
 

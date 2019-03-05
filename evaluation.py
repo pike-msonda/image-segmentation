@@ -2,9 +2,13 @@ from utils.utils import read_truth, eval_bound
 import os
 import cv2
 import argparse
-import utils.evaluate_boundary as eb
 from tabulate import tabulate
 import pandas as pd
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+from skimage.color import rgba2rgb, rgb2gray
+from skimage import io
 
 SEG_PATH = "./segs/"
 BINARY_PATH = "./binary/"
@@ -20,8 +24,8 @@ def main(args):
         for dl in binary_list:
             seg_path = SEG_PATH + dl + '/'  
             binary_path = BINARY_PATH + dl + '/'  
-            for f, s in zip([f for f in os.listdir(binary_path) if os.path.isfile(os.path.join(binary_path, f)) and f.endswith(".jpg")], 
-                [f for f in os.listdir(seg_path) if os.path.isfile(os.path.join(seg_path, f)) and f.endswith(".jpg")]):
+            for f, s in zip([f for f in os.listdir(binary_path) if os.path.isfile(os.path.join(binary_path, f)) and f.endswith(".png")], 
+                [f for f in os.listdir(seg_path) if os.path.isfile(os.path.join(seg_path, f)) and f.endswith(".png")]):
                 if(os.path.exists(binary_path + f)):
                     print ("removing .. {0}".format(binary_path + f))
                     os.remove(binary_path + f)
@@ -35,7 +39,7 @@ def main(args):
     for sl in seg_list:
         path = SEG_PATH + sl + '/'
         if (sl == args.a or args.a == 'all'):
-            for f, s in zip(truth_list, [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f)) and f.endswith(".jpg")]):
+            for f, s in zip(truth_list, [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f)) and f.endswith(".png")]):
                 ground_path = GROUND_TRUTH + f
                 boundary_path = path + s
 
@@ -44,14 +48,12 @@ def main(args):
                 img = cv2.imread(boundary_path)
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 size = img.shape
-
-                import pdb; pdb.set_trace();
+                
                 boundary_predict = img.reshape(size[0], size[1], 1)
 
-                precision, recall, f1 = eval_bound(boundary_predict, f_truth, 2)
-                
+                precision, recall, f1 = eval_bound(boundary_predict, f_truth, 10)
                 data = {'Algorithm': sl.upper(), 'Image': image_name, 'Precision': precision, 'Recall': recall, 'F1 Score': f1}
-                print ("boundar details: {0}, {1}".format(f_truth.shape[0], f_truth.shape[1]))
+                print ("boundary details: {0}, {1}".format(f_truth.shape[0], f_truth.shape[1]))
                 print ("image details: {0}, {1}".format(img.shape[0], img.shape[1]))
 
                 array = []

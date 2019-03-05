@@ -1,3 +1,8 @@
-# IMAGE SEGMENTATION ALGORITHMS
+# IMAGE SEGMENTATIONS
+A set of image segmentation methods. Made using python packages and other references from other  github repos. Links below
 
-I will write the proper description later. 
+## SETUP
+   ## 1 Clone
+
+
+    
