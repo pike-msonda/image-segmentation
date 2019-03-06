@@ -7,8 +7,6 @@ import pandas as pd
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-from skimage.color import rgba2rgb, rgb2gray
-from skimage import io
 
 SEG_PATH = "./segs/"
 BINARY_PATH = "./binary/"
@@ -32,7 +30,7 @@ def main(args):
                 if(os.path.exists(seg_path + s)):
                     print ("removing .. {0}".format(seg_path + s))
                     os.remove(seg_path + s)
-                    
+
         print("Delete was successful")
         return
 
@@ -46,8 +44,9 @@ def main(args):
 
                 image_name = boundary_path.split('/')[-1]
                 f_truth = read_truth(ground_path)
-                img = cv2.imread(boundary_path)
-                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                img = cv2.imread(boundary_path, 1)
+                img = img.astype(dtype='uint8')
+                img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
                 size = img.shape
                 
                 boundary_predict = img.reshape(size[0], size[1], 1)
