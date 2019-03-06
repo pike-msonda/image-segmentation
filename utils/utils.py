@@ -30,12 +30,15 @@ def read_images(folder='images'):
     return list_img, list_img_name, img.shape
 
 def filter_image(filter, image):
-    if filter== "MEDIAN":
+    if filter.upper() == "MEDIAN":
         print("Using {0} filter....".format(filter.upper()))
         filtered_image = median(image, disk(10))
     elif filter.upper() == "GAUSSIAN":
         print("Using {0} filter....".format(filter.upper()))
         filtered_image = gaussian(image, sigma=1, multichannel=True)
+    else:
+        print("Please use the correct filter name. {0} is not supported".format(filter.upper()))
+        return
 
     return filtered_image
 

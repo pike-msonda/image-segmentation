@@ -6,7 +6,6 @@ from tabulate import tabulate
 import pandas as pd
 from PIL import Image
 import numpy as np
-import matplotlib.pyplot as plt
 
 SEG_PATH = "./segs/"
 BINARY_PATH = "./binary/"

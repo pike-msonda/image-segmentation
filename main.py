@@ -9,7 +9,7 @@ def execute(method=None):
     images, img_names, size =  read_images(folder=IMAGES_FOLDER)
 
     params = {'images':images, 'image_size':size,'filenames':img_names, 
-        'clusters':CLUSTERS, 'filter':'gaussian'}
+        'clusters':CLUSTERS, 'filter':'median'}
     segmentation_algorithms = SegmentationResolver(params)
     
     segmentation_algorithms.segment(algorithm=method.lower())
