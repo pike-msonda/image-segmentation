@@ -18,21 +18,22 @@ def main(args):
     truth_list = [f for f in os.listdir(GROUND_TRUTH) if os.path.isfile(os.path.join(GROUND_TRUTH, f)) and f.endswith(".mat")]
     seg_list = os.listdir(SEG_PATH)
     binary_list = os.listdir(BINARY_PATH)
-    results = pd.DataFrame(columns=['Algorithm', 'Image', 'Precision', 'Recall'])
+    results = pd.DataFrame(columns=['Algorithm', 'Image', 'Precision', 'Recall', 'F1 Score'])
 
     if(args.d == 'D'):
         for dl in binary_list:
             seg_path = SEG_PATH + dl + '/'  
-            binary_path = BINARY_PATH + dl + '/'  
-            for f, s in zip([f for f in os.listdir(binary_path) if os.path.isfile(os.path.join(binary_path, f)) and f.endswith(".png")], 
-                [f for f in os.listdir(seg_path) if os.path.isfile(os.path.join(seg_path, f)) and f.endswith(".png")]):
-                if(os.path.exists(binary_path + f)):
-                    print ("removing .. {0}".format(binary_path + f))
-                    os.remove(binary_path + f)
+            binary_path = BINARY_PATH + dl + '/'
+            for b in [f for f in os.listdir(binary_path) if os.path.isfile(os.path.join(binary_path, f)) and f.endswith(".png")]:
+                if(os.path.exists(binary_path + b)):
+                    print ("removing .. {0}".format(binary_path + b))
+                    os.remove(binary_path + b)
+            for s in  [f for f in os.listdir(seg_path) if os.path.isfile(os.path.join(seg_path, f)) and f.endswith((".png",".jpg"))]:
                 if(os.path.exists(seg_path + s)):
-                    print ("removing .. {0}".format(binary_path + f))
-                    os.remove(seg_path + f)
-        print("completed")
+                    print ("removing .. {0}".format(seg_path + s))
+                    os.remove(seg_path + s)
+                    
+        print("Delete was successful")
         return
 
     print("CALCULATING ...  \n")
