@@ -44,8 +44,8 @@ def main(args):
 
                 image_name = boundary_path.split('/')[-1]
                 f_truth = read_truth(ground_path)
-                img = cv2.imread(boundary_path, 1)
-                img = img.astype(dtype='uint8')
+                img = cv2.imread(boundary_path)
+
                 img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
                 size = img.shape
                 
