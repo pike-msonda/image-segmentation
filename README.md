@@ -1,8 +1,35 @@
-# IMAGE SEGMENTATIONS
-A set of image segmentation methods. Made using python packages and other references from other  github repos. Links below
-
-## SETUP
-   ## 1 Clone
-
-
-    
+astroid==1.6.5
+backports.functools-lru-cache==1.5
+cloudpickle==0.8.0
+colorama==0.4.1
+configparser==3.7.3
+cycler==0.10.0
+dask==1.1.1
+decorator==4.3.2
+enum34==1.1.6
+futures==3.1.1
+isort==4.3.10
+kiwisolver==1.0.1
+lazy-object-proxy==1.3.1
+matplotlib==3.0.3
+mccabe==0.6.1
+MiniSom==2.1.5
+networkx==2.2
+numpy==1.16.1
+opencv-python==4.0.0.21
+Pillow==5.4.1
+pylint==2.3.1
+pyparsing==2.3.1
+python-dateutil==2.8.0
+pytz==2018.9
+PyWavelets==1.0.2
+scikit-fuzzy==0.4.0
+scikit-image==0.14.2
+scikit-learn==0.20.3
+scipy==1.2.1
+six==1.12.0
+sklearn==0.0
+toolz==0.9.0
+typed-ast==1.3.1
+virtualenv==16.4.3
+wrapt==1.11.1

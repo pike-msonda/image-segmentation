@@ -18,7 +18,7 @@ def execute(method=None):
 def main():
     start = datetime.now()
     execute(method='KMEANS')
-    execute(method='FUZZY')
+    execute(method='FUZZY') 
     execute(method='MEANSHIFT')
     execute(method='SOM')
     execute(method='GMM')
@@ -29,3 +29,4 @@ def main():
         
 if __name__ =='__main__':
    main()
+
