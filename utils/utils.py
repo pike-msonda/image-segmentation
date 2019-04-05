@@ -35,8 +35,8 @@ def filter_image(filter, image):
         filtered_image = median(image, disk(10))
     elif filter.upper() == "GAUSSIAN":
         print("Using {0} filter....".format(filter.upper()))
-        filtered_image = gaussian(image, sigma=1, multichannel=True)
-    else:
+        filtered_image = cv2.GaussianBlur(image, (25, 25), 0.5)
+    else:   
         print("Please use the correct filter name. {0} is not supported".format(filter.upper()))
         return
 
@@ -75,7 +75,6 @@ def get_image_boundaries(labels, size):
 
     ret2 = np.ones([height,width,1], dtype="uint8")
     bounds = ret2 * 255 - ret * 255
-
     return bounds
 
 def get_variable_name(variable):
@@ -124,7 +123,6 @@ def read_truth(path):
     true_boundary = true_boundary.reshape(height, width, 1)
 
     true_boundary = 255 * np.ones([height, width, 1], dtype="uint8") - (true_boundary > 0) * 255
-
     return true_boundary
 
 def helper(b1,b2,h,w,thres):

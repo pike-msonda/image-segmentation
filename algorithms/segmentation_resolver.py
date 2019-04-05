@@ -4,7 +4,7 @@ from sklearn.cluster import DBSCAN, MeanShift, estimate_bandwidth
 from minisom import MiniSom
 import skfuzzy as fuzz
 from utils.utils import *
-
+import asyncio
 class SegmentationResolver:
     """
         Params:
