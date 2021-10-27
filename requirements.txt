@@ -4,7 +4,7 @@ cloudpickle==0.8.0
 colorama==0.4.1
 configparser==3.7.3
 cycler==0.10.0
-dask==1.1.1
+dask==2021.10.0
 decorator==4.3.2
 enum34==1.1.6
 futures==3.1.1
